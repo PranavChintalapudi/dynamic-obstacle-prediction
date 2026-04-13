@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Obstacle Predictor Node -->
+  <node pkg="dynamic_obstacle_prediction" type="obstacle_predictor_node" name="obstacle_predictor_node" output="screen">
+    <!-- Load parameters from YAML file -->
+    <rosparam command="load" file="$(find dynamic_obstacle_prediction)/config/obstacle_predictor.yaml" />
+  </node>
+
+  <!-- RViz Visualization (optional) -->
+  <arg name="rviz" default="true" />
+  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" args="-d $(find dynamic_obstacle_prediction)/config/obstacle_predictor.rviz" />
+
+</launch>

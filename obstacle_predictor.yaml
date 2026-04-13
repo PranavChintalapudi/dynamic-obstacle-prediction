@@ -1,0 +1,95 @@
+# =============================================================================
+# Dynamic Obstacle Prediction Configuration
+# Author: Pranav Chintalapudi, ANSCER Robotics
+# Date: January 2026
+# =============================================================================
+
+# =============================================================================
+# CLUSTERING & DETECTION
+# =============================================================================
+cluster_tolerance: 0.35          # Euclidean distance to group points (m)
+detection_merge_threshold: 0.45  # Distance to fuse LiDAR+camera detections (m)
+
+# =============================================================================
+# TRACKING
+# =============================================================================
+association_threshold: 1.0       # Max distance for detection-track association (m)
+max_missed_frames: 10            # Frames before removing lost tracks
+
+# =============================================================================
+# PREDICTION
+# =============================================================================
+prediction_horizon: 2.5          # How far to predict into future (s)
+prediction_time_step: 0.2        # Time between prediction waypoints (s)
+
+# =============================================================================
+# SPATIAL FILTERING
+# =============================================================================
+min_obstacle_height: 0.05        # Min height in odom frame (m)
+max_obstacle_height: 2.0         # Max height in odom frame (m)
+
+# =============================================================================
+# CLASSIFICATION THRESHOLDS - DUAL MODE
+# =============================================================================
+# When robot is STATIONARY (more sensitive to detect slow movers)
+min_dynamic_speed_stationary: 0.25        # Min speed when robot still (m/s)
+unknown_to_dynamic_speed_stationary: 0.30 # Threshold when robot still (m/s)
+static_to_unknown_speed_stationary: 0.35  # Wake up threshold when robot still (m/s)
+
+# When robot is MOVING (stricter to avoid false positives from noise)
+min_dynamic_speed_moving: 0.50            # Min speed when robot moving (m/s)
+unknown_to_dynamic_speed_moving: 0.60     # Threshold when robot moving (m/s)
+static_to_unknown_speed_moving: 0.70      # Wake up threshold when robot moving (m/s)
+
+min_age_for_classification: 10   # Min frames before classification
+
+# =============================================================================
+# ROBOT MOTION DETECTION
+# =============================================================================
+motion_linear_threshold: 0.05    # Linear velocity threshold (m/s)
+motion_angular_threshold: 0.08   # Angular velocity threshold (rad/s)
+use_camera_during_motion: false  # Use camera when robot moves (false=LiDAR only)
+
+# =============================================================================
+# ADAPTIVE NOISE MODEL
+# =============================================================================
+# Base noise when robot is stationary
+base_noise_gate: 0.08            # Base sensor noise (m)
+
+# Rotation compensation
+rotation_noise_scale: 0.40       # Scale factor for tangential motion noise
+min_rotation_noise: 0.15         # Minimum noise during rotation (m)
+
+# Linear motion compensation
+linear_noise_scale: 0.20         # Scale factor for robot speed noise
+
+# Distance-based noise
+far_object_threshold: 2.0        # Distance considered "far" (m)
+far_object_noise: 0.25           # Additional noise for far objects (m)
+
+# Relative motion filtering
+relative_velocity_threshold: 0.12  # Max velocity diff to consider static (m/s)
+
+# =============================================================================
+# VELOCITY VALIDATION
+# =============================================================================
+max_plausible_velocity: 12.0           # Absolute max before rejection (m/s)
+max_acceleration_stationary: 3.0       # Max accel when robot stationary (m/s²)
+max_acceleration_moving: 8.0           # Max accel when robot moving (m/s²)
+max_acceleration_rotating: 20.0        # Max accel during rotation (m/s²)
+velocity_recovery_factor: 0.75         # How much velocity to preserve on rejection (0-1)
+max_consecutive_rejections: 4          # Reset after this many rejections
+enable_acceleration_check: true        # Set to false to disable acceleration filtering entirely
+
+# =============================================================================
+# OCCLUSION DETECTION
+# =============================================================================
+occlusion_displacement_threshold: 2.0  # Displacement indicating occlusion (m)
+occlusion_time_threshold: 1.0          # Min time for occlusion check (s)
+
+# =============================================================================
+# PARALLEL MOTION DETECTION
+# =============================================================================
+parallel_motion_alignment_threshold: 0.85  # Min alignment for parallel motion (0-1)
+parallel_motion_min_speed: 0.25            # Min speed to consider parallel motion (m/s)
+parallel_motion_min_robot_speed: 0.08      # Min robot speed to check parallel motion (m/s)
